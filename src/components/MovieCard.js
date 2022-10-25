@@ -1,37 +1,49 @@
-import { View, Text, SafeAreaView, ScrollView , Image } from 'react-native'
-import React ,{useState , useEffect} from 'react'
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  Image,
+  Dimensions,
+} from 'react-native';
+import React, {useState, useEffect} from 'react';
 
-import { apiSlice, useGetMoviesQuery } from '../redux/api/apiSlice'
-import { useDispatch } from 'react-redux'
-import { FlatList } from 'react-native-gesture-handler'
+import {apiSlice, useGetMoviesQuery} from '../redux/api/apiSlice';
+import {useDispatch} from 'react-redux';
+import {FlatList} from 'react-native-gesture-handler';
+import { useRef } from 'react';
 
 const MovieCard = () => {
-    // const {data} = useGetMoviesQuery()
-    
-    const [movies , setMovies] = useState([])
-    
-    const getMovies = async ()=>{
-      const respone = await  fetch('https://api.themoviedb.org/3/movie/popular?api_key=5a890566bdcb7118ee21f39720e0a6d6&language=en-US')
-      const data = await respone.json()
-      setMovies(data.results)
-    }
+  // const {data} = useGetMoviesQuery()
+  const numcloumns = useRef()
+  const width = Dimensions.get('window').width;
 
+  const [movies, setMovies] = useState([]);
 
-    useEffect(()=>{
-      getMovies();
-    },[])
-    console.log(movies)
+  const getMovies = async () => {
+    const respone = await fetch(
+      'https://api.themoviedb.org/3/movie/popular?api_key=5a890566bdcb7118ee21f39720e0a6d6&language=en-US',
+    );
+    const data = await respone.json();
+    setMovies(data.results);
+  };
+
+  useEffect(() => {
+    getMovies();
+  }, []);
+  console.log(movies);
   return (
-   <ScrollView>
-   {movies.map((movie)=>(
-    <View>
-    <Image  style={{width:'100%' , height:400}} source={{uri:"https://image.tmdb.org/t/p/w500"+movie.poster_path}}/>
-    
-    </View>
-   ))}
+    <FlatList
+    numColumns={2}
+      data={movies}
+      renderItem={({item}) => (
+        <Image
+          style={{width: 220, height: 300}}
+          source={{uri: 'https://image.tmdb.org/t/p/w500' + item.poster_path}}
+        />
+      )}
+    />
+  );
+};
 
-   </ScrollView>
-  )
-}
-
-export default MovieCard
+export default MovieCard;
