@@ -1,10 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import MovieCard from '../../components/MovieCard'
 
 const PopularScreen = () => {
   return (
     <View>
-      <Text>PopularScreen</Text>
+     <MovieCard/>
     </View>
   )
 }
