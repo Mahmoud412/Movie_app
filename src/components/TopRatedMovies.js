@@ -1,4 +1,4 @@
-import { View, Text , Image} from 'react-native'
+import { View, Text , Image, TouchableOpacity , Pressable} from 'react-native'
 import React , {useState , useEffect} from 'react'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 
@@ -21,12 +21,15 @@ const TopRatedMovies = () => {
     <FlatList
     numColumns={2}
       data={topRated}
-      renderItem={({item}) => (
+      renderItem={({item ,index}) => (
+        <TouchableOpacity>
         <Image
           style={{width: 220, height: 300}}
           source={{uri: 'https://image.tmdb.org/t/p/w500' + item.poster_path}}
         />
+        </TouchableOpacity>
       )}
+      keyExtractor={(item)=>item.id}
     />
   )
 }

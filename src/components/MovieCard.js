@@ -5,6 +5,7 @@ import {
   ScrollView,
   Image,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 
@@ -37,11 +38,14 @@ const MovieCard = () => {
     numColumns={2}
       data={movies}
       renderItem={({item}) => (
+        <TouchableOpacity>
         <Image
           style={{width: 220, height: 300}}
           source={{uri: 'https://image.tmdb.org/t/p/w500' + item.poster_path}}
         />
+        </TouchableOpacity>
       )}
+      keyExtractor={(item)=> item.id}
     />
   );
 };
