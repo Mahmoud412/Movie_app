@@ -2,8 +2,9 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
-import HomeScreen from '../screens/Home/HomeScreen'
 import BottomTabNaviagtion from './BottomTabNaviagtion'
+import PopularDetailScreen from '../screens/movies/PopularDetailScreen'
+import TopRetedDetailScreen from '../screens/movies/TopRetedDetailScreen'
 
 
 const Stack = createStackNavigator()
@@ -12,6 +13,8 @@ const Router = () => {
     <NavigationContainer>
     <Stack.Navigator>
     <Stack.Screen name='Home' component={BottomTabNaviagtion} options={{headerShown:false}}/>
+    <Stack.Screen name='PopularDetailScreen' component={PopularDetailScreen}/>
+    <Stack.Screen name='TopRatedDetailScreen' component={TopRetedDetailScreen}/>
     </Stack.Navigator>
     </NavigationContainer>
   )

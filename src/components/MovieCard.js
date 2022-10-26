@@ -13,9 +13,11 @@ import {apiSlice, useGetMoviesQuery} from '../redux/api/apiSlice';
 import {useDispatch} from 'react-redux';
 import {FlatList} from 'react-native-gesture-handler';
 import { useRef } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 const MovieCard = () => {
   // const {data} = useGetMoviesQuery()
+  const navigation = useNavigation()
   const numcloumns = useRef()
   const width = Dimensions.get('window').width;
 
@@ -38,7 +40,7 @@ const MovieCard = () => {
     numColumns={2}
       data={movies}
       renderItem={({item}) => (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>navigation.navigate('PopularDetailScreen' , item.id)}>
         <Image
           style={{width: 220, height: 300}}
           source={{uri: 'https://image.tmdb.org/t/p/w500' + item.poster_path}}
