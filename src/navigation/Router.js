@@ -13,8 +13,8 @@ const Router = () => {
     <NavigationContainer>
     <Stack.Navigator>
     <Stack.Screen name='Home' component={BottomTabNaviagtion} options={{headerShown:false}}/>
-    <Stack.Screen name='PopularDetailScreen' component={PopularDetailScreen}/>
-    <Stack.Screen name='TopRatedDetailScreen' component={TopRetedDetailScreen}/>
+    <Stack.Screen name='PopularDetailScreen' component={PopularDetailScreen} options={{headerShown:false}}/>
+    <Stack.Screen name='TopRatedDetailScreen' component={TopRetedDetailScreen} options={{headerShown:false}}/>
     </Stack.Navigator>
     </NavigationContainer>
   )
