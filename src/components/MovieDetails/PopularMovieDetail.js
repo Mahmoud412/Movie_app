@@ -6,6 +6,7 @@ import Loader from '../Loader';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import styles from './PopularMovieStyle';
 
 
 
@@ -13,8 +14,7 @@ const PopularMovieDetail = ({movieId}) => {
   const id = movieId;
   const [loading, setLoading] = useState(true);
   const [details, setDetails] = useState([]);
-  const [videos ,setVideos ] = useState([])
-  console.log(videos)
+  const [reviews ,setReviews ] = useState([])
   const tofix = Math.trunc(details.vote_average);
   const ratings = [tofix];
   const starArray = [...Array(10).keys()].map(i => i + 1);
@@ -36,8 +36,8 @@ const PopularMovieDetail = ({movieId}) => {
     };
 
     const getVideos = async ()=>{
-      const video = await GET(`/movie/${id}/videos`);
-      setVideos(video.results)
+      const data = await GET(`/movie/${id}/reviews`);
+      setReviews(data.results)
 
     }
 
@@ -94,115 +94,19 @@ const PopularMovieDetail = ({movieId}) => {
         <Text  style={styles.overViewTilte}>OVERVIEW</Text>
         <Text style={styles.overViewText}>{details.overview}</Text>
         </View>
+        <Text style={styles.reviewsText}>Reviews</Text>
+            {reviews.map((review)=>(
+             <View style={styles.review}>
+              <Text numberOfLines={4} style={styles.reviewAuthor}>{review.author}</Text>
+              <Text style={styles.reviewContent}>{review.content}</Text>
+
+             </View>
+            ))}
         </View>
       )}
     </ScrollView>
   );
 };
 
-const styles = StyleSheet.create({
-  backdropImage: {
-    width: '100%',
-    height: 300,
-  },
-  posterImage: {
-    width: '50%',
-    height: 300,
-  },
-  container: {
-    backgroundColor: '#151c25',
-    height: '100%',
-  },
-  subContainer: {
-    flexDirection: 'row',
-    padding: 15,
-  },
-  textView: {
-    margin: 10,
-  },
-  release_date: {
-    color: 'white',
-    fontWeight: 'bold',
-    marginVertical: 5,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: '#f3be11',
-    fontSize: 16,
-    height: 30,
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 20,
-    marginVertical: 10,
-    
-    
-  },
-  runtimeOver: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  runtime: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 18,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  sectionTwo: {
-    margin: 10,
-    flexDirection:'row',
-    alignItems:'center'
-  },
-  vote_average: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 40,
-  },
-  vote_count:{
-    color:'#636c81',
-    fontWeight:'bold',
-    fontSize:18
 
-  },
-  button:{
-    color:'white',
-    backgroundColor:'#f3be11',
-    borderRadius: 20,
-    borderWidth: 1,
-    marginRight: 40,
-    marginLeft: 40,
-    marginTop: 10,
-    paddingTop: 20,
-    paddingBottom: 20,
-    flexDirection:'row',
-    justifyContent:'center',
-    alignItems:'center',
-  },
-  buttonText:{
-    color:'white',
-    textAlign:'center',
-    fontSize:16,
-    fontWeight:'bold'
-  },
-  overviewContainer:{
-    margin:10
-  },
-  overViewTilte:{
-    color:'#636c81',
-    fontWeight:'bold',
-    fontSize:18,
-    marginVertical:10
-  },
-  overViewText:{
-    color:'white',
-    fontWeight:'bold',
-    fontSize:16,
-    marginBottom:10
-  }
-});
 export default PopularMovieDetail;
