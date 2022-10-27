@@ -95,8 +95,8 @@ const PopularMovieDetail = ({movieId}) => {
         <Text style={styles.overViewText}>{details.overview}</Text>
         </View>
         <Text style={styles.reviewsText}>Reviews</Text>
-            {reviews.map((review)=>(
-             <View style={styles.review}>
+            {reviews.map((review, index)=>(
+             <View key={index} style={styles.review}>
               <Text numberOfLines={4} style={styles.reviewAuthor}>{review.author}</Text>
               <Text style={styles.reviewContent}>{review.content}</Text>
 
