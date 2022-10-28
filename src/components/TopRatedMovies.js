@@ -26,7 +26,7 @@ const TopRatedMovies = props => {
       <FlatList
       numColumns={2}
       data={topRated}
-      renderItem={({item, index}) => (
+      renderItem={({item}) => (
         <TouchableOpacity
           onPress={() => naivgation.navigate('TopRatedDetailScreen', item.id)}>
           <Image

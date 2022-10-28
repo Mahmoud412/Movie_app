@@ -117,13 +117,13 @@ const PopularMovieDetail = ({movieId}) => {
           {reviews.map((review, index) => (
             <View key={index} style={styles.review}>
               <Text style={styles.reviewAuthor}>{review.author}</Text>
-              <Text
+             <View>
+             <Text
                 onTextLayout={onTextLayout}
                 numberOfLines={textShown ? undefined : 4}
                 style={styles.reviewContent}>
                 {review.content}
               </Text>
-             <View>
              {lengthMore ? (
               <Text
                 onPress={toggleNumberOfLines}
