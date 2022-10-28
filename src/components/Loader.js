@@ -8,7 +8,7 @@ const Loader = () => {
       <Animatable.Image
         source={require('../assets/spin.gif')}
         animation="slideInUp"
-        iterationCount={5}
+        iterationCount={1}
         style={styles.image}
       />
       <Animatable.Text animation="slideInUp" iterationCount={1} style={styles.text}>
@@ -21,8 +21,7 @@ const Loader = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#011e31',
-    height: 980,
-    flex: 1,
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },

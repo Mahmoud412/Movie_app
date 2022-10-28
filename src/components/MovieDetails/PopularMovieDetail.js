@@ -49,7 +49,7 @@ const PopularMovieDetail = ({movieId}) => {
     const getDetails = async () => {
       const data = await GET(`/movie/${id}`);
       setDetails(data);
-      // setLoading(false);
+      setLoading(false);
     };
 
     const getVideos = async () => {

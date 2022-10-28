@@ -4,20 +4,26 @@ import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import {GET} from '../Services/API';
 import {IMAGE_POSTER_URL} from '../config';
+import Loader from './Loader';
 const TopRatedMovies = props => {
   const naivgation = useNavigation();
   const [topRated, setTopRated] = useState([]);
+  const [loading , setLoading] = useState(true)
+
 
   useEffect(() => {
     const getMovies = async () => {
       const respone = await GET('/movie/top_rated');
       setTopRated(respone.results);
+      setLoading(false)
     };
 
     getMovies();
   }, []);
   return (
-    <FlatList
+    <>
+    {loading ? (<Loader/>) :(
+      <FlatList
       numColumns={2}
       data={topRated}
       renderItem={({item, index}) => (
@@ -31,6 +37,10 @@ const TopRatedMovies = props => {
       )}
       keyExtractor={item => item.id}
     />
+    
+    )}
+      
+    </>
   );
 };
 

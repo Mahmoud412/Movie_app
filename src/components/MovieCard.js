@@ -14,21 +14,26 @@ import {FlatList} from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import {GET} from '../Services/API'
 import { IMAGE_POSTER_URL } from '../config';
+import Loader from './Loader';
 const MovieCard = (props) => {
   // const {data} = useGetMoviesQuery()
   const navigation = useNavigation()
 
   const [movies, setMovies] = useState([]);
+  const [loading , setLoading] = useState(true)
 
   useEffect(()=>{
     const getMovies = async ()=>{
       const respone = await GET('/movie/popular')
       setMovies(respone.results)
+      setLoading(false)
     }
 
     getMovies();
   },[])
   return (
+   <>
+   {loading ? (<Loader/>):(
     <FlatList
     numColumns={2}
       data={movies}
@@ -42,6 +47,9 @@ const MovieCard = (props) => {
       )}
       keyExtractor={(item)=> item.id}
     />
+   )}
+    
+    </>
   );
 };
 
