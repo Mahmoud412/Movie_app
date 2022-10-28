@@ -132,8 +132,19 @@ const styles = StyleSheet.create({
       left:10,
       fontWeight:'bold',
       fontSize:18
+    },
+    showMore:{
+      color:'#f3be11',
+      textDecorationLine:'underline',
+      fontWeight:'bold',
+      fontSize:17,
+      left:10,
+      bottom:10,
+      lineHeight:30,
+    },
+    backIcon:{
+     position:'absolute' , zIndex:100, padding:20 , top:20 , fontWeight:'bold' , marginRight:10
     }
-  
   });
 
 export default styles
