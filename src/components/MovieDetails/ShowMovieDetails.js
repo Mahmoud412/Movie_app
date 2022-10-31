@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import {View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {GET} from '../../Services/API';
 import {IMAGE_POSTER_URL} from '../../config';
@@ -12,26 +6,19 @@ import Loader from '../Loader';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import styles from './PopularMovieStyle';
-import {useCallback} from 'react';
-import { useNavigation } from '@react-navigation/native';
+import styles from './MovieDetailsStyle';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import MovieReview from './MovieReview';
 
-const PopularMovieDetail = ({movieId}) => {
+const ShowMovieDetails = () => {
+  const route = useRoute()
+  const id = route.params
+  console.log(id)
+
   const navigation = useNavigation()
-  const id = movieId;
-  const NUM_OF_LINES = 4;
   const [loading, setLoading] = useState(true);
   const [details, setDetails] = useState([]);
   const [reviews, setReviews] = useState([]);
-  const [textShown, setTextShown] = useState(false); //To show ur remaining Text
-  const [lengthMore, setLengthMore] = useState(false); //to show the "Read more & Less Line"
-  const toggleNumberOfLines = () => {
-    //To toggle the show text or hide it
-    setTextShown(!textShown);
-  };
-  const onTextLayout = useCallback(e => {
-    setLengthMore(e.nativeEvent.lines.length >= NUM_OF_LINES); //to check the text is more than 4 lines or not
-  }, []);
   const tofix = Math.trunc(details.vote_average);
   const ratings = [tofix];
   const starArray = [...Array(10).keys()].map(i => i + 1);
@@ -52,13 +39,14 @@ const PopularMovieDetail = ({movieId}) => {
       setLoading(false);
     };
 
-    const getVideos = async () => {
+    const getReviews = async () => {
       const data = await GET(`/movie/${id}/reviews`);
       setReviews(data.results);
+      setLoading(false);
     };
 
     getDetails();
-    getVideos();
+    getReviews();
   }, []);
 
   return (
@@ -67,10 +55,11 @@ const PopularMovieDetail = ({movieId}) => {
         <Loader />
       ) : (
         <View>
-        <TouchableOpacity  onPress={()=> navigation.navigate('Popular')} style={styles.backIcon}>
-        <Ionicons name='chevron-back' size={30} color='white' />
-
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.backIcon}>
+            <Ionicons name="chevron-back" size={30} color="white" />
+          </TouchableOpacity>
           <Image
             style={styles.backdropImage}
             source={{uri: `${IMAGE_POSTER_URL}${details.backdrop_path}`}}
@@ -115,29 +104,12 @@ const PopularMovieDetail = ({movieId}) => {
           </View>
           <Text style={styles.reviewsText}>Reviews</Text>
           {reviews.map((review, index) => (
-            <View key={index} style={styles.review}>
-              <Text style={styles.reviewAuthor}>{review.author}</Text>
-             <View>
-             <Text
-                onTextLayout={onTextLayout}
-                numberOfLines={textShown ? undefined : 4}
-                style={styles.reviewContent}>
-                {review.content}
-              </Text>
-             {lengthMore ? (
-              <Text
-                onPress={toggleNumberOfLines}
-                style={styles.showMore}>
-                {textShown ? 'Read Less...' : 'Read More...'}
-              </Text>
-            ) : null}
-             </View>
-            </View>
-          ))}
+            <MovieReview  review={review} index={index}/>
+           ))}
         </View>
       )}
     </ScrollView>
   );
 };
 
-export default PopularMovieDetail;
+export default ShowMovieDetails;

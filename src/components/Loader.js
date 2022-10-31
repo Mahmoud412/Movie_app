@@ -21,7 +21,7 @@ const Loader = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#011e31',
-    height: '100%',
+    height: 900,
     justifyContent: 'center',
     alignItems: 'center',
   },

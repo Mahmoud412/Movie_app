@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import TopRatedMovies from '../../components/TopRatedMovies'
+import TopRatedMovies from '../../components/Movies/TopRatedMovies'
 
 const TopReatedScreen = () => {
   return (
