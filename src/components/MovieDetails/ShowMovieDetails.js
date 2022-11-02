@@ -9,15 +9,16 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import styles from './MovieDetailsStyle';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import MovieReview from './MovieReview';
-
+import {useDispatch} from 'react-redux';
+import {addToFavorites} from '../../redux/features/favoritSlice';
 const ShowMovieDetails = () => {
-  const route = useRoute()
-  const id = route.params
-  console.log(id)
-
-  const navigation = useNavigation()
+  const route = useRoute();
+  const id = route.params;
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [details, setDetails] = useState([]);
+  console.log(details.id);
   const [reviews, setReviews] = useState([]);
   const tofix = Math.trunc(details.vote_average);
   const ratings = [tofix];
@@ -42,7 +43,6 @@ const ShowMovieDetails = () => {
     const getReviews = async () => {
       const data = await GET(`/movie/${id}/reviews`);
       setReviews(data.results);
-      setLoading(false);
     };
 
     getDetails();
@@ -93,7 +93,11 @@ const ShowMovieDetails = () => {
               <Text style={styles.vote_count}>{details.vote_count} VOTES</Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              dispatch(addToFavorites({id: '122', poster: 'poster'}))
+            }>
             <AntDesign name="heart" size={25} color="white" />
 
             <Text style={styles.buttonText}> ADD TO FAVORITES </Text>
@@ -103,9 +107,15 @@ const ShowMovieDetails = () => {
             <Text style={styles.overViewText}>{details.overview}</Text>
           </View>
           <Text style={styles.reviewsText}>Reviews</Text>
-          {reviews.map((review, index) => (
-            <MovieReview  review={review} index={index}/>
-           ))}
+          {reviews && reviews == '' ? (
+            <Text style={styles.noReviewsText}>No Reviews</Text>
+          ) : (
+            <View>
+              {reviews.map((review, index) => (
+                <MovieReview review={review} index={index} />
+              ))}
+            </View>
+          )}
         </View>
       )}
     </ScrollView>

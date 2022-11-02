@@ -19,7 +19,7 @@ const MovieCard = props  => {
 
     getMovies();
   }, []);
-  return <>{loading ? <Loader /> : <MovieGrid movies={movies}  navScreen = {navScreen} movieId = {movies.id} />}</>;
+  return <>{loading ? <Loader /> : <MovieGrid movies={movies}   movieId = {movies.id} />}</>;
 };
 
 export default MovieCard;

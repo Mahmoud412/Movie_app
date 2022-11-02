@@ -144,6 +144,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginRight: 10,
   },
+  noReviewsText:{
+    color:'white',
+    fontWeight:'bold',
+    fontSize:18,
+    justifyContent:'center',
+    alignSelf:'center',
+    marginVertical:20
+  }
 });
 
 export default styles;
