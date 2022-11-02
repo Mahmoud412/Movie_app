@@ -9,9 +9,7 @@ export const favoritSlice = createSlice({
   initialState,
   reducers: {
     addToFavorites: (state, action) => {
-      const isFav = state.items.find(
-        item => item.id === action.payload.id,
-      );
+      const isFav = state.items.find(item => item.id === action.payload.id);
       if (!isFav) {
         state.items.push({...action.payload});
       }
@@ -33,9 +31,12 @@ export const favoritSlice = createSlice({
 
 export const {addToFavorites, removeFromFavorites} = favoritSlice.actions;
 
-export const selectFavoritMovie = state => state.favorit.items;
+export const selectFavoritMovies = (state) => state.favorit.items;
 
 export const selectFavoritMovieWithId = (state, id) =>
-  state.favorit.items.filter(item => item.id === id);
+  state.favorit.items.find(item => item.id === id);
+
+export const isFavMovieSelector = (state, id) =>
+  state.favorit.items.find(m => m.id === id) != undefined;
 
 export default favoritSlice.reducer;

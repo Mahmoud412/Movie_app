@@ -4,13 +4,12 @@ import MovieListItem from './MovieListItem';
 
 const MovieGrid = props=> {
   const movies = props.movies;
-  const navScreen = props.navScreen  
   return (
     <FlatList
       numColumns={2}
       data={movies}
       renderItem={({item}) => (
-        <MovieListItem movie={item}   navScreen= {navScreen}  />
+        <MovieListItem movie={item} />
       )}
       keyExtractor={item => item.id}
     />

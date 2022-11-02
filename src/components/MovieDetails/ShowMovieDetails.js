@@ -9,8 +9,13 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import styles from './MovieDetailsStyle';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import MovieReview from './MovieReview';
-import {useDispatch} from 'react-redux';
-import {addToFavorites} from '../../redux/features/favoritSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  addToFavorites,
+  isFavMovieSelector,
+  removeFromFavorites,
+} from '../../redux/features/favoritSlice';
+
 const ShowMovieDetails = () => {
   const route = useRoute();
   const id = route.params;
@@ -18,7 +23,6 @@ const ShowMovieDetails = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [details, setDetails] = useState([]);
-  console.log(details.id);
   const [reviews, setReviews] = useState([]);
   const tofix = Math.trunc(details.vote_average);
   const ratings = [tofix];
@@ -49,6 +53,9 @@ const ShowMovieDetails = () => {
     getReviews();
   }, []);
 
+  
+
+  const isFav = useSelector(state => isFavMovieSelector(state, details.id));
   return (
     <ScrollView style={styles.container}>
       {loading ? (
@@ -95,12 +102,15 @@ const ShowMovieDetails = () => {
           </View>
           <TouchableOpacity
             style={styles.button}
-            onPress={() =>
-              dispatch(addToFavorites({id: '122', poster: 'poster'}))
-            }>
-            <AntDesign name="heart" size={25} color="white" />
+            onPress={() => {
+              const data = {id: details.id, poster_path: details.poster_path};
+              dispatch(isFav ? removeFromFavorites(data) : addToFavorites(data));
+            }}>
+            <AntDesign name={isFav ? 'heart' : 'hearto'} size={25} color="white" />
 
-            <Text style={styles.buttonText}> ADD TO FAVORITES </Text>
+            <Text style={styles.buttonText}>
+              {isFav ? 'REMOVE FROM FAVORITES' : 'ADD TO FAVORITES'}
+            </Text>
           </TouchableOpacity>
           <View style={styles.overviewContainer}>
             <Text style={styles.overViewTilte}>OVERVIEW</Text>

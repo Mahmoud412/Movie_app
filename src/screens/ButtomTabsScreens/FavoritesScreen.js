@@ -1,20 +1,14 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { apiSlice, useGetMoviesQuery } from '../../redux/api/apiSlice'
-import { useSelector } from 'react-redux'
-import { selectFavoritMovie } from '../../redux/features/favoritSlice'
+import {View, Text} from 'react-native';
+import React from 'react';
+import {apiSlice, useGetMoviesQuery} from '../../redux/api/apiSlice';
+import {useSelector} from 'react-redux';
+import {selectFavoritMovies} from '../../redux/features/favoritSlice';
+import MovieGrid from '../../components/MovieGrid';
 const FavoritesScreen = () => {
-    const {data} = useGetMoviesQuery()
+  const {data} = useGetMoviesQuery();
+  const movies = useSelector(state => selectFavoritMovies(state));
+  console.log(movies);
+  return <MovieGrid movies={movies} />;
+};
 
-    const movie = useSelector(selectFavoritMovie)
-
-    console.log(movie)
-
-  return (
-    <View>
-   
-    </View>
-  )
-}
-
-export default FavoritesScreen
+export default FavoritesScreen;
