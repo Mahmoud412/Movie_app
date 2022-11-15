@@ -19,5 +19,6 @@
 - React Bottom Tab Navigation
 - React-native-vector-icons
 - Redux ToolKit
+- Redux Persist
 - The Movie Database Api
 
